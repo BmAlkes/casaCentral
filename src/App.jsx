@@ -5,25 +5,40 @@ import Property from './Pages/Property'
 import AddProperty from './Pages/AddProperty'
 import Bookings from './Pages/Bookings'
 import Favorites from './Pages/Favorites'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import { Suspense } from 'react'
+import Layout from './components/Layout'
+import {QueryClient, QueryClientProvider} from 'react-query'
+import { ToastContainer } from 'react-toastify'
+import {ReactQueryDevtools} from 'react-query/devtools'
+import 'react-toastify/ReactToastify.css'
 
 function App() {
   
+  const queryClient = new QueryClient()
 
   return (
     <>
+    <QueryClientProvider client={queryClient}>
+
       <BrowserRouter>
-      <Header/>
-      <Routes>
+      <Suspense fallback={<div>Loading data...</div>}>
+      <Routes >
+        <Route element={<Layout/>}>
         <Route path="/" element={<Home/>}/>
-        <Route path="/listing" element={<Listing/>}/>
+        <Route path="/listing">
+        <Route index element={<Listing/>}/>
+        <Route path=":propetyId" element={<Property/>} />
+        </Route>
         <Route path="/addproperty" element={<AddProperty/>}/>
         <Route path="/bookings" element={<Bookings/>}/>
         <Route path="/favorites" element={<Favorites/>}/>
+        </Route>
       </Routes>
-      <Footer/>
+      </Suspense>
       </BrowserRouter>
+      <ToastContainer/>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
     </>
   )
 }
