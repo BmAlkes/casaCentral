@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MdAddHome, MdHomeWork, MdPermContactCalendar } from "react-icons/md";
 import { RiCheckboxMultipleBlankFill } from "react-icons/ri";
+import AddPropertyModal from "./AddPropertyModa";
+import useAuthCheck from "../hooks/useAuthCheck";
 
-const Navbar = ({containerStyles}) => {
+const Navbar = ({ containerStyles }) => {
+  const [modalOpened, setModalOpened] = useState(false);
+  const { validateLogin } = useAuthCheck();
+  const handleAddPropertyClick = () => {
+    if(validateLogin()){
+      setModalOpened(true)
+    }
+  };
+
   return (
     <nav className={`${containerStyles}`}>
       <NavLink
@@ -35,13 +45,14 @@ const Navbar = ({containerStyles}) => {
         <MdPermContactCalendar />
         <div>Contact</div>
       </NavLink>
-      <NavLink
-        to={"/"}
+      <div
+        onClick={handleAddPropertyClick}
         className={" flexCenter gap-x-1 rounded-full px-2 py-1 cursor-pointer"}
       >
         <MdAddHome />
         <div>Add Property</div>
-      </NavLink>
+      </div>
+        <AddPropertyModal opened={modalOpened} setModalOpened={setModalOpened} />
     </nav>
   );
 };

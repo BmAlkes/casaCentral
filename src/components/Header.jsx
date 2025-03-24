@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { MdClose, MdMenu } from "react-icons/md";
 import userIcon from '../assets/user.svg'
+import { useAuth0 } from "@auth0/auth0-react";
+import ProfileMenu from "./Profile";
 
 const Header = () => {
 
   const [menuOpened, setMenuOpened] = useState(false);
   const[active, setActive] =useState(false)
+  const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0()
 
   const toogleMenu=()=>{
     setMenuOpened(!menuOpened)
@@ -46,18 +49,18 @@ const Header = () => {
             <Navbar
               containerStyles={`${
                 menuOpened
-                  ? "flex items-start flex-col gap-y-8 capitalize fixed top-20 right-8 p-12 bg-white rounded-3xl shadow-md w-64 medium-16 ring-1 ring-slate-900/5 transition-all duration-300 z-50"
+                  ? "xl:hidden flex items-start flex-col gap-y-8 capitalize fixed top-20 right-8 p-12 bg-white rounded-3xl shadow-md w-64 medium-16 ring-1 ring-slate-900/5 transition-all duration-300 z-50"
                   : "flex items-start flex-col gap-y-8 capitalize fixed top-20 -right-[100%] p-12 bg-white rounded-3xl shadow-md w-64 medium-16 ring-1 ring-slate-900/5 transition-all duration-300 z-50"
               }`}
             />
           </div>
 
           {/* bttuons & icons */}
-          <div className="flexBetween gap-x-3 sm:gap-x-5 bold-16 ">
-            <button className="btn-secondary flexCenter gap-x-2 medium-16 rounded-full">
+          <div className="flexBetween gap-x-3 sm:gap-x-5 bold-16 " >
+           {!isAuthenticated? (<button onClick={loginWithRedirect} className="btn-secondary flexCenter gap-x-2 medium-16 rounded-full">
                 <img src={userIcon} alt=""height={22} width={22}/>
                 <span>Login</span>
-            </button>
+            </button>): (<ProfileMenu user={user} logout={logout}/>)}
             {!menuOpened ? (
               <>
                 <MdMenu
