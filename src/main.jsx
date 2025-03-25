@@ -9,7 +9,7 @@ import '@mantine/dates/styles.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Auth0Provider domain='dev-a0yd7dci5dy456df.us.auth0.com' clientId='1yTC9tnHzZAZEviNzQd6YKS5dEzmPLmK' authorizationParams={{redirect_uri:"http://localhost:5173/"}} audience="http://localhost:8000" scope="openid profile email">
+    <Auth0Provider domain='dev-a0yd7dci5dy456df.us.auth0.com' clientId='1yTC9tnHzZAZEviNzQd6YKS5dEzmPLmK' authorizationParams={{redirect_uri:"https://casa-central.vercel.app/"}} audience="https://casacentral-backend.onrender.com" scope="openid profile email">
     <MantineProvider>
 
 
