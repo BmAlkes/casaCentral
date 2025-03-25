@@ -25,7 +25,7 @@ const Layout = () => {
       try {
         const token = await getAccessTokenWithPopup({
           authorizationParams: {
-            audience: "http://localhost:8000",
+            audience: "https://casacentral-backend.onrender.com",
             scope: "openid profile email",
           },
         });
